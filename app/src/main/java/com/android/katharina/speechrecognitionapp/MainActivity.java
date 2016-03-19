@@ -166,6 +166,8 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+
+        // Einbinden der Nombot-AIML-Dokumente
         File fileExt = new File(getExternalFilesDir(null).getAbsolutePath() + "/bots");
         //if (!fileExt.exists()) {
         ZipFileExtraction extract = new ZipFileExtraction();
@@ -308,14 +310,13 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_myday) {
 
         } else if (id == R.id.nav_db) {
-
+            //Ansicht der Einträge in der SQLiteDb
         } else if (id == R.id.nav_setup) {
             //Einstellungen
-            //new page
         } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_send) {
-
+            startActivity(new Intent(Intent.ACTION_SEND));
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
