@@ -41,34 +41,10 @@ public class MainActivity extends AppCompatActivity
             + "id INTEGER PRIMARY KEY AUTOINCREMENT,"
             + "token TEXT,"
             + "value TEXT);";
-    final String CREATE_TABLE_DRINK = "CREATE TABLE tbl_drink ("
+    final String CREATE_TABLE_LOGCAT = "CREATE TABLE tbl_logcat ("
             + "id INTEGER PRIMARY KEY AUTOINCREMENT,"
-            + "token TEXT,"
-            + "value TEXT);";
-    final String CREATE_TABLE_MEAL = "CREATE TABLE tbl_meal ("
-            + "id INTEGER PRIMARY KEY AUTOINCREMENT,"
-            + "token TEXT,"
-            + "value TEXT);";
-    final String CREATE_TABLE_FRUIT = "CREATE TABLE tbl_fruit ("
-            + "id INTEGER PRIMARY KEY AUTOINCREMENT,"
-            + "token TEXT,"
-            + "value TEXT);";
-    final String CREATE_TABLE_VEGETABLE = "CREATE TABLE tbl_vegetable ("
-            + "id INTEGER PRIMARY KEY AUTOINCREMENT,"
-            + "token TEXT,"
-            + "value TEXT);";
-    final String CREATE_TABLE_UNIT = "CREATE TABLE tbl_unit ("
-            + "id INTEGER PRIMARY KEY AUTOINCREMENT,"
-            + "token TEXT,"
-            + "value TEXT);";
-    final String CREATE_TABLE_NO = "CREATE TABLE tbl_no ("
-            + "id INTEGER PRIMARY KEY AUTOINCREMENT,"
-            + "token TEXT,"
-            + "value TEXT);";
-    final String CREATE_TABLE_ACTION = "CREATE TABLE tbl_action ("
-            + "id INTEGER PRIMARY KEY AUTOINCREMENT,"
-            + "token TEXT,"
-            + "value TEXT);";
+            + "request TEXT,"
+            + "response TEXT);";
 
     Bot bot;
     Chat chatSession;
@@ -156,7 +132,7 @@ public class MainActivity extends AppCompatActivity
         Cursor cursor = db.query("tbl_token", columns, null, null, null, null, "value");
 
         TextView t = new TextView(this);
-        t = (TextView) findViewById(R.id.DBTOKENS);
+        //t = (TextView) findViewById(R.id.DBTOKENS);
 
         String sValue = "";
         cursor.moveToFirst();
@@ -220,7 +196,6 @@ public class MainActivity extends AppCompatActivity
                     response = "There is no response";
                 }
                 //((TextView) findViewById(R.id.title_text)).setText(response);
-
             }
         }.execute();
 
@@ -389,15 +364,17 @@ public class MainActivity extends AppCompatActivity
                 t.append( i+1 + ":" + matches.get(i) + "\n" );
             }
             if( matches.size() > 0 )
-            {   // erster Treffer immer der Beste ist
-                recognizeVoice(matches.get(0));
+            {
+                recognizeVoice(matches);
             }
-            //wordsList.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, matches));
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
 
     //Ersatzwörterbuch
+    // eventuell Wörterbucheinträge noch später verwenden für Speichern der Rückgabewerte
+    // vom AIML-Match
+    // -- aktuell nicht in Gebrauch
     protected String getValueFromDictionary( String myToken )
     {
         String ret="UNKNOWN";
@@ -415,22 +392,32 @@ public class MainActivity extends AppCompatActivity
     }
 
 
-    protected void recognizeVoice( String woerter )
+    protected void recognizeVoice( ArrayList<String> matches )
     {
         TextView t= new TextView(this);
         t=(TextView)findViewById(R.id.TOKENS);
         t.setText("");
-
+        int idx = 0;
         //User Request
-        String request = woerter;
-        //Bot Response
-        String response = chatSession.multisentenceRespond(request);
+        do{
+            String request = matches.get(idx);
+            //Bot Response
+            String response = chatSession.multisentenceRespond(request);
+            // Log relevant return-values to Table LOGCAT
+            // for following display/ function ...
+            // ...
+            t.setText("Request: " + request + ", Response: " + response);
+            if( (response == "") && (idx < matches.size()-1 ))
+                idx++;
+            else {
+                speakOut( response );
+                break;
+            }
+        }while(1==1);
 
-        speakOut( response );
         /*
         String [] foo = woerter.split(" ");
         String [] bed = new String[ foo.length ];
-
 
         for( int i=0; i<foo.length; i++ )
         {
@@ -444,7 +431,6 @@ public class MainActivity extends AppCompatActivity
             }
             else
                 t.append( i+1 + ":   " + foo[i] + "/   " + bed[i] + "\n" );
-
         }
         */
     }
