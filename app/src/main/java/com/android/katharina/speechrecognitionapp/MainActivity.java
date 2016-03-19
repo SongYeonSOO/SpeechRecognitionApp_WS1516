@@ -293,7 +293,7 @@ public class MainActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            return true;
+            startActivity(new Intent(this, SettingsActivity.class));
         }
 
         return super.onOptionsItemSelected(item);
@@ -314,6 +314,7 @@ public class MainActivity extends AppCompatActivity
             //Ansicht der Einträge in der SQLiteDb
         } else if (id == R.id.nav_setup) {
             //Einstellungen
+            startActivity(new Intent(this, SettingsActivity.class));
         } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_send) {
