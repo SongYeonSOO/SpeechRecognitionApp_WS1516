@@ -308,6 +308,7 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_home) {
 
         } else if (id == R.id.nav_myday) {
+            startActivity(new Intent(this, MyDayActivity.class));
 
         } else if (id == R.id.nav_db) {
             //Ansicht der Einträge in der SQLiteDb

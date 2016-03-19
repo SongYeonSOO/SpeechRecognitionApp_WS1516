@@ -24,7 +24,9 @@
         android:layout_alignParentEnd="true"
         android:id="@+id/speakButton"
         style="@style/AppTheme"
-        android:background="@color/aliceblue" />
+        android:background="@color/aliceblue"
+        android:longClickable="true"
+        android:textStyle="bold|italic" />
 
     <TextView
         android:layout_row="1"
