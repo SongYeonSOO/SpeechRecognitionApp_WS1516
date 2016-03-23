@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity
 
     Bot bot;
     Chat chatSession;
-    
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
