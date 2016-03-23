@@ -61,16 +61,15 @@ public class MainActivity extends AppCompatActivity
         File dbFile = this.getDatabasePath("DictVR.sqlite");
         if (dbFile.exists()) {
             //open
-            db = openOrCreateDatabase("DictVR.sqlite", SQLiteDatabase.CREATE_IF_NECESSARY, null);
+            db = openOrCreateDatabase("DictVR.sqlite", SQLiteDatabase.OPEN_READWRITE, null);
         } else {
             //create
             db = openOrCreateDatabase("DictVR.sqlite", SQLiteDatabase.CREATE_IF_NECESSARY, null);
         }
-        db.execSQL("drop table tbl_token;");
+        db.execSQL("drop table if exists tbl_token;");
         db.execSQL(CREATE_TABLE_TOKEN);
 
         insertTokenInDict("RELPRO", new String[]{"ich"});
-
         insertTokenInDict("PRO", new String[]{"mit"});
 
         //AKTIONEN: TAKE -> Aufnahme
