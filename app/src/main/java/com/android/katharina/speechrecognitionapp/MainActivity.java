@@ -45,10 +45,10 @@ public class MainActivity extends AppCompatActivity
             + "id INTEGER PRIMARY KEY AUTOINCREMENT,"
             + "request TEXT,"
             + "response TEXT);";
-    
+
     Bot bot;
     Chat chatSession;
-
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
